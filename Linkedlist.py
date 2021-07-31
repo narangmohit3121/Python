@@ -56,23 +56,23 @@ class LinkedList(object):
             print(current_node.value, end=';')
             current_node = current_node.next
 
-    def reverse_linked_list_2(self):
-        temp_head_node = Node(self.head.value)
-        temp_head_node.next = self.head.next
-        self.head.next = None
-        while True:
-            print('Reversing list')
-            temp_next_node = Node(temp_head_node.next.value)
-            temp_next_node.next = temp_head_node.next.next
-            # print('Reversing list')
-            # print(temp_node.value)
-            temp_head_node.next.next = self.head
-            self.head = temp_head_node.next
-
-            if temp_next_node.next is not None:
-                temp_head_node = temp_next_node
-            else:
-                break
+    # def reverse_linked_list_2(self):
+    #     temp_head_node = Node(self.head.value)
+    #     temp_head_node.next = self.head.next
+    #     self.head.next = None
+    #     while True:
+    #         print('Reversing list')
+    #         temp_next_node = Node(temp_head_node.next.value)
+    #         temp_next_node.next = temp_head_node.next.next
+    #         # print('Reversing list')
+    #         # print(temp_node.value)
+    #         temp_head_node.next.next = self.head
+    #         self.head = temp_head_node.next
+    #
+    #         if temp_next_node.next is not None:
+    #             temp_head_node = temp_next_node
+    #         else:
+    #             break
 
     def reverse_linked_list(self):
         temp_node = Node(self.head.next.value)
