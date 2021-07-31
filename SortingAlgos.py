@@ -42,7 +42,7 @@ class SortingMethods(object):
                 position = i
                 current_val = input_arr[i]
 
-                while (position > gap) and (input_arr[position - gap] > current_val):
+                while (position >= gap) and (input_arr[position - gap] > current_val):
                     input_arr[position] = input_arr[position - gap]
                     position -= gap
                 input_arr[position] = current_val
@@ -53,8 +53,38 @@ class SortingMethods(object):
                 gap_insertion_sort(arr, start_point, number_of_sublist)
             number_of_sublist = number_of_sublist//2
 
+    def merge_sort(self, arr):
+        if len(arr) > 1:
+            split_point = len(arr)//2
+            array_first_half = arr[:split_point]
+            array_second_half = arr[split_point:]
+            self.merge_sort(array_first_half)
+            self.merge_sort(array_second_half)
 
-a1 = [7, 4, 1, 5, 2, 6, 0, -1, 10, 3, 1]
-SortingMethods.shell_sort(a1)
+            i, j, k = 0, 0, 0
+            while i < len(array_first_half) and j < len(array_second_half):
+                if array_first_half[i] < array_second_half[j]:
+                    arr[k] = array_first_half[i]
+                    i += 1
+                    k += 1
+                else:
+                    arr[k] = array_second_half[j]
+                    j += 1
+                    k += 1
+
+            while i < len(array_first_half):
+                arr[k] = array_first_half[i]
+                i += 1
+                k += 1
+            while j < len(array_second_half):
+                arr[k] = array_second_half[j]
+                j += 1
+                k += 1
+
+
+sorting_methods = SortingMethods()
+a1 = [7, 4, 1, 5, 2, 6, 0, -1, 10, 3, 1, 4, 9]
+# SortingMethods.shell_sort(a1)
+sorting_methods.merge_sort(a1)
 
 print(a1)
