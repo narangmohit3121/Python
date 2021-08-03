@@ -81,10 +81,44 @@ class SortingMethods(object):
                 j += 1
                 k += 1
 
+    @staticmethod
+    def quick_sort(input_arr):
+        def quick_sort_help(arr, start, end):
+            if start < end:
+                split_position = find_partition(arr, start, end)
+                quick_sort_help(arr, start, split_position - 1)
+                quick_sort_help(arr, split_position + 1, end)
+
+        def find_partition(arr, start, end) -> int:
+            split_point = start
+            split_value = arr[start]
+            left_mark = start + 1
+            right_mark = end
+            done = False
+            while not done:
+                i = 0
+                while left_mark <= right_mark and arr[left_mark] <= split_value:
+                    left_mark += 1
+                while right_mark >= left_mark and arr[right_mark] >= split_value:
+                    right_mark -= 1
+                if right_mark < left_mark:
+                    done = True
+                else:
+                    temp = arr[left_mark]
+                    arr[left_mark] = arr[right_mark]
+                    arr[right_mark] = temp
+            temp = arr[split_point]
+            arr[split_point] = arr[right_mark]
+            arr[right_mark] = temp
+            # split_point = right_mark
+            return right_mark
+
+        quick_sort_help(input_arr, 0, len(input_arr) - 1)
+
 
 sorting_methods = SortingMethods()
 a1 = [7, 4, 1, 5, 2, 6, 0, -1, 10, 3, 1, 4, 9]
 # SortingMethods.shell_sort(a1)
-sorting_methods.merge_sort(a1)
+sorting_methods.quick_sort(a1)
 
 print(a1)
