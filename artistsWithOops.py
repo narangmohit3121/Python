@@ -152,3 +152,6 @@ if __name__ == "__main__":
                 for current_track in current_album.tracks:
                     print("{0.name}\t{1.name}\t{2.year}\t{3}".
                           format(current_artist, current_album, current_album, current_track), file=check_file)
+                    # print(f"{current_artist.name}\t{current_album.name}\t{current_album.year}\t{current_track}"
+                    #       , file=check_file)
+

@@ -130,6 +130,7 @@ depth_first_search_with_ordered_dict(g2, 'A')
 def word_ladder(wordlist):
     word_graph = Graph()
     buckets = {}
+    connections = {}
     for word in wordlist:
         for i in range(len(word)):
             bucket = word[:i] + '_' + word[(i+1):]
@@ -145,8 +146,24 @@ def word_ladder(wordlist):
             for word2 in words_in_bucket:
                 if word1 != word2:
                     word_graph.add_edge(word1, word2)
+                    # dictionary representation of the graph
+                    if word1 in connections:
+                        connections[word1].add(word2)
+                    else:
+                        connections[word1] = {word2}
     print(buckets)
+    print(connections)
     return word_graph
 
 
-word_ladder(['POOL', 'FOOL', 'COOL', 'COAL', 'FOAL', 'POLL'])
+word_ladder(['POOL', 'FOOL', 'COOL', 'COAL', 'FOAL', 'POLL', 'POLE'])
+word_graph = {
+    'POOL': {'POLL', 'FOOL', 'COOL'},
+              'FOOL': {'FOAL', 'POOL', 'COOL'},
+              'COOL': {'POOL', 'FOOL', 'COAL'},
+              'POLL': {'POOL', 'POLE'},
+              'FOAL': {'FOOL', 'COAL'},
+              'COAL': {'FOAL', 'COOL'},
+              'POLE': {'POLL'}
+              }
+print(list(find_all_paths_bfs(word_graph, 'FOOL', 'POLE')))
