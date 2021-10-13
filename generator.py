@@ -20,7 +20,7 @@ def odd_numbers():
 
 
 odds = odd_numbers()
-
+print(odds)
 # for i in range(1, 30):
 #     print(next(odds))
 
@@ -38,6 +38,6 @@ def define_pi():
 
 pi = define_pi()
 
-for i in range(100000):
-    print(next(pi))
+# for i in range(100000):
+#     print(next(pi))
 

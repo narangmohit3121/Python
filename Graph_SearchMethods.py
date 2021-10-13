@@ -112,6 +112,48 @@ def depth_first_search_with_ordered_dict(graph, start):
     return visited.keys()
 
 
+def find_shortest_path_between_vertices(graph):
+    paths_between_vertices = {}
+    for start_vertex in graph:
+        for end_vertex in graph:
+            if start_vertex != end_vertex:
+                current_combo = start_vertex + end_vertex
+                paths_between_vertices[current_combo] = []
+                for path in find_all_paths_bfs(graph, start_vertex, end_vertex):
+                    if (len(path) < len(paths_between_vertices[current_combo])) or \
+                            len(paths_between_vertices[current_combo]) == 0:
+                        paths_between_vertices[current_combo] = path
+                    # paths_between_vertices[current_combo].append(path)
+
+    return paths_between_vertices
+
+
+t = 0
+d = 0
+
+
+def find_articulation_points(graph, current_vertex, low={}, disc={}, visited=[], ap={}, parent={}, root=""):
+    global t
+    global d
+    if root == "":
+        root = current_vertex
+    children = 0
+    visited.append(current_vertex)
+    low[current_vertex] = t+1
+    disc[current_vertex] = d+1
+    for conn in graph[current_vertex]:
+        if conn not in visited:
+            children += 1
+            parent[conn] = current_vertex
+            find_articulation_points(graph, conn, low, disc, visited, ap, parent, root)
+            low[current_vertex] = min(low[current_vertex, low[conn]])
+            if low[current_vertex] >= disc[current_vertex]:
+                ap[current_vertex] = True
+        elif conn != parent[current_vertex]:
+            low[current_vertex] = min(low[current_vertex], low[conn])
+    return ap
+
+
 g2 = {
     'A': {'B', 'C'},
     'B': {'A', 'D', 'E'},
@@ -124,9 +166,11 @@ g2 = {
 # breadth_first_search_with_ordered_dict(g2, 'A')
 # all_paths_A_F = list(find_all_paths_bfs(g2, 'A', 'F'))
 # print(all_paths_A_F)
-depth_first_search_with_ordered_dict(g2, 'A')
+# depth_first_search_with_ordered_dict(g2, 'A')
+print(find_shortest_path_between_vertices(g2))
 
 
+###########################################################################################################
 def word_ladder(wordlist):
     word_graph = Graph()
     buckets = {}
@@ -151,13 +195,13 @@ def word_ladder(wordlist):
                         connections[word1].add(word2)
                     else:
                         connections[word1] = {word2}
-    print(buckets)
-    print(connections)
+    # print(buckets)
+    # print(connections)
     return word_graph
 
 
 word_ladder(['POOL', 'FOOL', 'COOL', 'COAL', 'FOAL', 'POLL', 'POLE'])
-word_graph = {
+word_graph_1 = {
     'POOL': {'POLL', 'FOOL', 'COOL'},
               'FOOL': {'FOAL', 'POOL', 'COOL'},
               'COOL': {'POOL', 'FOOL', 'COAL'},
@@ -166,4 +210,5 @@ word_graph = {
               'COAL': {'FOAL', 'COOL'},
               'POLE': {'POLL'}
               }
-print(list(find_all_paths_bfs(word_graph, 'FOOL', 'POLE')))
+# print(list(find_all_paths_bfs(word_graph_1, 'FOOL', 'POLE')))
+
